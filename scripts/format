@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+
+BASE_DIR="$( dirname "${BASH_SOURCE[0]}" )"
+DIR="$(cd "${BASE_DIR}/.."; pwd)"
+
+FUMPT_CMD=(golangci-lint run --no-config --disable-all -E gofumpt --fix)
+IMPORTS_CMD=(golangci-lint run --no-config --disable-all -E goimports --fix)
+
+set -x
+# Run command directly if local or in docker in TeamCity
+"${FUMPT_CMD[@]}"
+"${IMPORTS_CMD[@]}"

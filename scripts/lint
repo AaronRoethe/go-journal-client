@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+BASE_DIR="$( dirname "${BASH_SOURCE[0]}" )"
+DIR="$(cd "${BASE_DIR}/.."; pwd)"
+
+CMD=(golangci-lint run --verbose)
+
+set -x
+
+"${CMD[@]}"
