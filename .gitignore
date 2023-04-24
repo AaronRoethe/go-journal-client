@@ -1,0 +1,26 @@
+# app template directories.
+artifacts/
+bin/
+tmp/
+
+# go cover output
+/coverage.out
+
+# GoLand
+**/.idea
+*.iml
+venv
+
+# Mac OS generated files
+.DS_Store
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# azure local conifg files
+__blobstorage__
+__azurite_*
+
+# environment
+.env
+.venv
