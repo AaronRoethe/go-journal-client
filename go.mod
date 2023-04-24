@@ -1,4 +1,4 @@
-module go-journal
+module github.com/AaronRoethe/go-journal-client
 
 go 1.20
 
