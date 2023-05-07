@@ -1,45 +1,43 @@
 {
-    "message": {
-        "items": [
-            {
-                "name": "type",
-                "desc": "Message Type: Select the type of message you'd like to create:",
-                "form": "select",
-                "options": [
-                    { "name": "fun",             "desc": "fun: ex(Hobbies, book, travel, date-night, quality time)"},
-                    { "name": "finance",         "desc": "finance: ex(goals long/short, budge, giving)"},
-                    { "name": "health",         "desc": "health: ex(exercise, meals, sleep, water, metal)"},
-                    { "name": "relationship",     "desc": "relationship: ex(friends/family, significant other, community)"},
-                    { "name": "spiritual",         "desc": "spiritual: ex(mindfulness, prayer, bible study, purpose, service)"},
-                    { "name": "work",             "desc": "work: ex(time management, fulfillment, stress)" }
-                ],
-                "required": true
-            },
-            {
-                "name": "emotion",
-                "desc": "Emotion Type: who are you feeling? ",
-                "form": "input",
-                "options": [
-                    { "name": "anger",    "desc": "anger: " },
-                    { "name": "discuss",  "desc": "discuss: " },
-                    { "name": "fear",     "desc": "fear: " },
-                    { "name": "happy",    "desc": "happy: " },
-                    { "name": "sad",      "desc": "sad: " },
-                    { "name": "surprise", "desc": "surprise: " }
-                ]
-            },
-            {
-                "name": "subject",
-                "desc": "Subject. Concise description of the changes. Imperative, lower case and no final dot:",
-                "form": "input",
-                "required": true
-            },
-			{
-                "name": "body",
-                "desc": "What's on your mind?",
-                "form": "input"
-            }
-        ],
-        "template": "{{.type}}{{with .emotion}}({{.}}){{end}}: {{.subject}}{{with .body}}\n\n{{.}}{{end}}"
-    }
+    "items": [
+        {
+            "name": "type",
+            "desc": "Message Type: Select the type of message you'd like to create:",
+            "form": "select",
+            "options": [
+                { "name": "fun",          "desc": "fun: ex(Hobbies, book, travel, date-night, quality time)"},
+                { "name": "finance",      "desc": "finance: ex(goals long/short, budge, giving)"},
+                { "name": "health",       "desc": "health: ex(exercise, meals, sleep, water, metal)"},
+                { "name": "relationship", "desc": "relationship: ex(friends/family, significant other, community)"},
+                { "name": "spiritual",    "desc": "spiritual: ex(mindfulness, prayer, bible study, purpose, service)"},
+                { "name": "work",         "desc": "work: ex(time management, fulfillment, stress)" }
+            ],
+            "required": true
+        },
+        {
+            "name": "emotion",
+            "desc": "Emotion Type: who are you feeling? ",
+            "form": "input",
+            "options": [
+                { "name": "anger",    "desc": "anger: " },
+                { "name": "discuss",  "desc": "discuss: " },
+                { "name": "fear",     "desc": "fear: " },
+                { "name": "happy",    "desc": "happy: " },
+                { "name": "sad",      "desc": "sad: " },
+                { "name": "surprise", "desc": "surprise: " }
+            ]
+        },
+        {
+            "name": "title",
+            "desc": "title Concise description of the changes. Imperative, lower case and no final dot:",
+            "form": "input",
+            "required": true
+        },
+        {
+            "name": "body",
+            "desc": "What's on your mind?",
+            "form": "input"
+        }
+    ],
+    "template": "{{.type}}{{with .emotion}}({{.}}){{end}}: {{.title}}{{with .body}}\n\n{{.}}{{end}}"
 }
