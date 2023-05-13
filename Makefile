@@ -15,8 +15,6 @@ endif
 .PHONY: build build-linux check-clean ci clean dev format install-deps lint start
 
 install-deps:
-	chmod +x ./scripts/*
-	ls -l ./scripts/*
 	go mod download
 	go mod tidy
 
@@ -37,7 +35,7 @@ build-linux:
 dev: bin/air
 	./bin/air -c .air.toml -d
 
-start: build
+start: ci
 	$(OUTPATH)/${EXEC_NAME}
 
 ci: install-deps build 
