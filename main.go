@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/AaronRoethe/go-journal-client/message"
@@ -21,10 +20,8 @@ var rootCmd = &cobra.Command{
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
+	godotenv.Load()
+
 	pocket.Auth_refresh()
 	rootCmd.AddCommand(pocket.LoginCmd)
 
