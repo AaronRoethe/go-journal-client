@@ -85,6 +85,29 @@ func Post_msg(answers JournalEntry) error {
 	return nil
 }
 
+func CreateBox(message string) string {
+	lines := strings.Split(message, "\n")
+	maxLength := 0
+
+	for _, line := range lines {
+		if l := len(line); l > maxLength {
+			maxLength = l
+		}
+	}
+
+	box := strings.Builder{}
+	box.WriteString(fmt.Sprintf("╔%s╗\n", strings.Repeat("═", maxLength+2)))
+
+	for _, line := range lines {
+		padding := maxLength - len(line)
+		box.WriteString(fmt.Sprintf("║ %s%s ║\n", line, strings.Repeat(" ", padding)))
+	}
+
+	box.WriteString(fmt.Sprintf("╚%s╝", strings.Repeat("═", maxLength+2)))
+
+	return box.String()
+}
+
 func Journal() {
 	form, tmplText, err := LoadForm()
 	if err != nil {
@@ -106,5 +129,5 @@ func Journal() {
 		log.Fatalf("failed to output string template: %v", err)
 	}
 
-	fmt.Println("Output:", string(output))
+	fmt.Println(CreateBox(string(output)))
 }
