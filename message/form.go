@@ -2,52 +2,43 @@ package message
 
 import (
 	"encoding/json"
-	"log"
-	"os"
+	"fmt"
 
 	survey "github.com/AlecAivazis/survey/v2"
 )
 
-type formItemOption struct {
-	Name string
-	Desc string
+type FormItemOption struct {
+	Name string `json:"name"`
+	Desc string `json:"desc"`
 }
 
-type formItem struct {
-	Name     string
-	Desc     string
-	Form     string
-	Options  []*formItemOption
-	Required bool
+type FormItem struct {
+	Name     string            `json:"name"`
+	Desc     string            `json:"desc"`
+	Form     string            `json:"form"`
+	Options  []*FormItemOption `json:"options"`
+	Required bool              `json:"required"`
 }
 
-type messageConfig struct {
-	Items    []*formItem
-	Template string
+type MessageConfig struct {
+	Items    []*FormItem `json:"items"`
+	Template string      `json:"template"`
 }
 
-func FillOutForm(form []*survey.Question) (map[string]interface{}, error) {
-	answers := map[string]interface{}{}
-	if err := survey.Ask(form, &answers); err != nil {
-		return nil, err
+func journalPrompt(form []*survey.Question) (JournalEntry, error) {
+	var journalEntry JournalEntry
+	if err := survey.Ask(form, &journalEntry); err != nil {
+		return JournalEntry{}, err
 	}
 
-	return answers, nil
+	return journalEntry, nil
 }
 
 func LoadForm() (qs []*survey.Question, tmplText string, err error) {
-	configFile, err := os.Open("templates/default.json")
+	var msgConfig MessageConfig
+	err = json.Unmarshal([]byte(defaultConfigJSON), &msgConfig)
 	if err != nil {
-		log.Printf("could not open config file: %v", err)
-		return nil, "", err
-	}
-	defer configFile.Close()
-
-	var msgConfig messageConfig
-	err = json.NewDecoder(configFile).Decode(&msgConfig)
-	if err != nil {
-		log.Printf("could not decode config file: %v", err)
-		return nil, "", err
+		return nil, "", fmt.Errorf("could not unmarshal config data: %v", err)
 	}
 
 	for _, item := range msgConfig.Items {
@@ -62,7 +53,7 @@ func LoadForm() (qs []*survey.Question, tmplText string, err error) {
 	return qs, msgConfig.Template, nil
 }
 
-func CreatePromptAndTransform(item *formItem) (survey.Prompt, func(interface{}) interface{}) {
+func CreatePromptAndTransform(item *FormItem) (survey.Prompt, func(interface{}) interface{}) {
 	switch item.Form {
 	case "input":
 		return &survey.Input{Message: item.Desc}, nil
@@ -73,7 +64,7 @@ func CreatePromptAndTransform(item *formItem) (survey.Prompt, func(interface{}) 
 		for _, option := range item.Options {
 			prompt.Options = append(prompt.Options, option.Desc)
 		}
-		transform := func(options []*formItemOption) func(interface{}) interface{} {
+		transform := func(options []*FormItemOption) func(interface{}) interface{} {
 			return func(ans interface{}) (newAns interface{}) {
 				if ans, ok := ans.(survey.OptionAnswer); ok {
 					ans.Value = options[ans.Index].Name

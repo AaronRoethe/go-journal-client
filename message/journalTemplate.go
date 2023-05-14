@@ -1,7 +1,9 @@
-{
+package message
+
+const defaultConfigJSON = `{
     "items": [
         {
-            "name": "type",
+            "name": "journalType",
             "desc": "Message Type: Select the type of message you'd like to create:",
             "form": "select",
             "options": [
@@ -39,5 +41,5 @@
             "form": "input"
         }
     ],
-    "template": "{{.type}}{{with .emotion}}({{.}}){{end}}: {{.title}}{{with .body}}\n\n{{.}}{{end}}"
-}
+    "template": "{{.JournalType}}{{with .Emotion}}({{.}}){{end}}: {{.Title}}{{with .Body}}\n\n{{.}}{{end}}"
+}`

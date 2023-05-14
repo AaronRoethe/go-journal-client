@@ -24,8 +24,8 @@ build:
 		-o $(OUTPATH)/${EXEC_NAME} \
 		${GO_SRC}
 	
-	# sudo rm -fv /usr/local/bin/${EXEC_NAME}
-	# sudo cp $(OUTPATH)/${EXEC_NAME} /usr/local/bin/${EXEC_NAME}
+	sudo rm -fv /usr/local/bin/${EXEC_NAME}
+	sudo cp $(OUTPATH)/${EXEC_NAME} /usr/local/bin/${EXEC_NAME}
 
 build-linux:
 	GOOS=linux $(GOVARS) go build \
